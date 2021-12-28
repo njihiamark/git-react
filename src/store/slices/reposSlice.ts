@@ -42,7 +42,8 @@ export const getRepoReadme = createAsyncThunk(
             `https://api.github.com/repos/${username}/${reponame}/contents/README.md`
         );
 
-        return response.data
+        response.data.repo_name = reponame; 
+        return response.data;
     }
 );
 
@@ -55,14 +56,13 @@ export const reposSlice = createSlice({
             state.username = action.payload;
             localStorage.setItem("username", action.payload);
         },
-        showRepo: (state, action: PayloadAction<number>) => {
-            const repo_index = (state.data as object[]).findIndex(((obj: any) => obj.id == action.payload));
-            state.current_repo = (state.data as object[])[repo_index];
-            localStorage.setItem('current_repo', JSON.stringify((state.data as object[])[repo_index]));
-        },
         resetData: (state) => {
             state.data = [];
             localStorage.setItem('data', JSON.stringify([]));
+        },
+        resetReadMeRepo: (state) => {
+            state.current_repo = [];
+            localStorage.setItem('current_repo', JSON.stringify({}));
         }
     },
     extraReducers: (builder) => {
@@ -105,8 +105,8 @@ export const reposSlice = createSlice({
 // Here we are just exporting the actions from this slice, so that we can call them anywhere in our app.
 export const {
     setUsername,
-    showRepo,
-    resetData
+    resetData,
+    resetReadMeRepo
 } = reposSlice.actions;
 
 //this helps us get the repos state anywere in the app

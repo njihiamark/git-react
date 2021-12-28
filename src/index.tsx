@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import store from "./store";
 
 import "./index.css";
-import App from "./App";
+import App from "../src/App";
 import ProjectDetail from "../src/pages/ProjectDetail";
 import Projects from "../src/pages/Projects";
 import reportWebVitals from "./reportWebVitals";
@@ -17,7 +17,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:projectId" element={<ProjectDetail />} />
+          <Route path="/projects-detail" element={<ProjectDetail />} />
           <Route
             path="*"
             element={
