@@ -67,7 +67,7 @@ function Home() {
             )}
             {error && (
               <p className="text-red-700 mt-2">
-                *You might have mistyped the username
+                *You might have mistyped the username or the github API Rate limit has been reached
               </p>
             )}
           </label>

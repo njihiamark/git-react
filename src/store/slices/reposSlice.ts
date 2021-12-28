@@ -74,6 +74,7 @@ export const reposSlice = createSlice({
             .addCase(getRepos.fulfilled, (state, { payload }) => {
                 // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
                 state.pending = false;
+                state.error = false;
                 state.data = payload;
                 localStorage.setItem('data', JSON.stringify(payload));
             })
@@ -90,6 +91,7 @@ export const reposSlice = createSlice({
             .addCase(getRepoReadme.fulfilled, (state, { payload }) => {
                 // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
                 state.pending = false;
+                state.error = false;
                 state.current_repo = payload;
                 localStorage.setItem('current_repo', JSON.stringify(payload));
             })
