@@ -14,11 +14,11 @@ export type ReposState = {
 
 //initialize the initial state
 const initialState: ReposState = {
-    data: [],
+    data: localStorage.getItem("data") ? JSON.parse(localStorage.getItem('data') as string):[],
     username: localStorage.getItem("username") ? localStorage.getItem("username") : "",
     pending: false,
     error: false,
-    current_repo: localStorage.getItem("current_repo") ? JSON.parse(localStorage.getItem('current_repo') as string) : null
+    current_repo: localStorage.getItem("current_repo") ? JSON.parse(localStorage.getItem('current_repo') as string) :null
 }
 
 //function to get the repos from github API
@@ -27,6 +27,19 @@ export const getRepos = createAsyncThunk(
     async (username: string) => {
         const response = await axios.get(
             `https://api.github.com/users/${username}/repos`
+        );
+
+        return response.data
+    }
+);
+
+//function to get the repo readme from github API
+export const getRepoReadme = createAsyncThunk(
+    "repos/getRepoReadme",
+    async (nameObject:{username: string, reponame: string}) => {
+        const {username, reponame} = nameObject;
+        const response = await axios.get(
+            `https://api.github.com/repos/${username}/${reponame}/contents/README.md`
         );
 
         return response.data
@@ -45,23 +58,46 @@ export const reposSlice = createSlice({
         showRepo: (state, action: PayloadAction<number>) => {
             const repo_index = (state.data as object[]).findIndex(((obj: any) => obj.id == action.payload));
             state.current_repo = (state.data as object[])[repo_index];
-            localStorage.setItem('current_repo', JSON.stringify((state.data as object[])[repo_index]))
+            localStorage.setItem('current_repo', JSON.stringify((state.data as object[])[repo_index]));
+        },
+        resetData: (state) => {
+            state.data = [];
+            localStorage.setItem('data', JSON.stringify([]));
         }
     },
     extraReducers: (builder) => {
         builder
             .addCase(getRepos.pending, (state) => {
                 state.pending = true;
+                state.error = false;
             })
             .addCase(getRepos.fulfilled, (state, { payload }) => {
                 // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
                 state.pending = false;
                 state.data = payload;
-
+                localStorage.setItem('data', JSON.stringify(payload));
             })
             .addCase(getRepos.rejected, (state) => {
                 state.pending = false;
                 state.error = true;
+                state.data = [];
+                localStorage.setItem('data', JSON.stringify([]));
+            })
+            .addCase(getRepoReadme.pending, (state) => {
+                state.pending = true;
+                state.error = false;
+            })
+            .addCase(getRepoReadme.fulfilled, (state, { payload }) => {
+                // When the API call is successful and we get some data,the data becomes the `fulfilled` action payload
+                state.pending = false;
+                state.current_repo = payload;
+                localStorage.setItem('current_repo', JSON.stringify(payload));
+            })
+            .addCase(getRepoReadme.rejected, (state) => {
+                state.pending = false;
+                state.error = true;
+                state.current_repo = {};
+                localStorage.setItem('current_repo', JSON.stringify({}));
             });
     },
 });
@@ -69,7 +105,8 @@ export const reposSlice = createSlice({
 // Here we are just exporting the actions from this slice, so that we can call them anywhere in our app.
 export const {
     setUsername,
-    showRepo
+    showRepo,
+    resetData
 } = reposSlice.actions;
 
 //this helps us get the repos state anywere in the app

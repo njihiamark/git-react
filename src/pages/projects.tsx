@@ -1,62 +1,50 @@
+import { useEffect } from "react";
+import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
+import { useNavigate } from "react-router-dom";
+
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { resetData, selectRepos } from "../store/slices/reposSlice";
 import Card from "../componenets/Card";
 import Header from "../componenets/Header";
 
 function Projects() {
+  const { data, username } = useAppSelector(selectRepos);
+  const dispatch = useAppDispatch();
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    window.onpopstate = (e) => {
+      dispatch(resetData());
+    };
+  }, [window.onpopstate]);
+
+  useEffect(() => {
+    if ((data as object[]).length === 0) {
+      navigate("/");
+    }
+  }, [data]);
+
+  const handleDataReset = () => {
+    dispatch(resetData());
+  };
+
   return (
     <div>
-      <Header>A username</Header>
+      <Header>
+        <ArrowNarrowLeftIcon
+          className="h-5 w-5 mr-2 inline-block cursor-pointer text-gray-500"
+          onClick={handleDataReset}
+        />{" "+username}
+      </Header>
       <div className="container mx-auto p-4">
         <div className="lg:grid lg:grid-cols-4 lg:gap-4">
-            <Card>
+          {(data as object[]).map((item: any) => (
+            <Card key={item.id}>
               <h2 className="text-gray-800 text-2xl font-semibold">
-                Project 1
+                {item.name}
               </h2>
             </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 2</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 3</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 4</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 5</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 6</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 7</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 8</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 9</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 10</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 11</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 12</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 13</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 14</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 15</h2>
-          </Card>
-          <Card>
-            <h2 className="text-gray-800 text-2xl font-semibold">Project 16</h2>
-          </Card>
+          ))}
         </div>
       </div>
     </div>

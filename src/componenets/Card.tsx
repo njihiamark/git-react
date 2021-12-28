@@ -6,7 +6,7 @@ type Props = {
 
 function Card({children}:Props) {
     return (
-      <div className="bg-white py-4 px-8 shadow rounded-lg mb-4">
+      <div className="bg-white py-4 px-8 shadow rounded-lg mb-4 flex items-center">
         {children}
       </div>
     );
