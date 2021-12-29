@@ -60,6 +60,9 @@ export const reposSlice = createSlice({
             state.data = [];
             localStorage.setItem('data', JSON.stringify([]));
         },
+        resetError: (state) => {
+            state.error = false;
+        },
         resetReadMeRepo: (state) => {
             state.current_repo = [];
             localStorage.setItem('current_repo', JSON.stringify({}));
@@ -108,7 +111,8 @@ export const reposSlice = createSlice({
 export const {
     setUsername,
     resetData,
-    resetReadMeRepo
+    resetReadMeRepo,
+    resetError
 } = reposSlice.actions;
 
 //this helps us get the repos state anywere in the app

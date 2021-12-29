@@ -7,7 +7,7 @@ import Card from "../componenets/Card";
 import Header from "../componenets/Header";
 import "./ProjectDetail.css";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { resetReadMeRepo, selectRepos } from "../store/slices/reposSlice";
+import { resetReadMeRepo, selectRepos, resetError } from "../store/slices/reposSlice";
 
 function ProjectDetail() {
   const { current_repo } = useAppSelector(selectRepos);
@@ -17,6 +17,7 @@ function ProjectDetail() {
   useEffect(() => {
     window.onpopstate = (e) => {
       dispatch(resetReadMeRepo());
+      dispatch(resetError());
     };
   }, [window.onpopstate]);
 
@@ -28,6 +29,7 @@ function ProjectDetail() {
 
   const handleRepoReset = () => {
     dispatch(resetReadMeRepo());
+    dispatch(resetError());
   };
 
   return (

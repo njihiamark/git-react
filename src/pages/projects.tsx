@@ -7,6 +7,7 @@ import {
   resetData,
   selectRepos,
   getRepoReadme,
+  resetError
 } from "../store/slices/reposSlice";
 import Card from "../componenets/Card";
 import Header from "../componenets/Header";
@@ -19,6 +20,7 @@ function Projects() {
   useEffect(() => {
     window.onpopstate = (e) => {
       dispatch(resetData());
+      dispatch(resetError());
     };
   }, [window.onpopstate]);
 
@@ -40,6 +42,7 @@ function Projects() {
 
   const handleDataReset = () => {
     dispatch(resetData());
+    dispatch(resetError());
   };
 
   const handleCardClicks = (username: string, reponame: string) => {
