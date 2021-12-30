@@ -22,13 +22,13 @@ function Projects() {
       dispatch(resetData());
       dispatch(resetError());
     };
-  }, [window.onpopstate]);
+  }, [window.onpopstate, navigate]);
 
   useEffect(() => {
     if ((data as object[]).length === 0) {
       navigate("/");
     }
-  }, [data]);
+  }, [data, navigate]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

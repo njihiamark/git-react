@@ -19,7 +19,7 @@ function Home() {
     if (!pending && !error && (data as object[]).length > 0 && submitted) {
       navigate("/projects");
     }
-  }, [pending, error, data, submitted]);
+  }, [pending, error, data, submitted, navigate]);
 
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {

@@ -19,13 +19,13 @@ function ProjectDetail() {
       dispatch(resetReadMeRepo());
       dispatch(resetError());
     };
-  }, [window.onpopstate]);
+  }, [window.onpopstate, dispatch]);
 
   useEffect(() => {
     if (Object.keys(current_repo as object).length === 0) {
       navigate("/projects");
     }
-  }, [current_repo]);
+  }, [current_repo, navigate]);
 
   const handleRepoReset = () => {
     dispatch(resetReadMeRepo());
