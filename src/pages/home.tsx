@@ -7,7 +7,7 @@ import { setUsername, getRepos, selectRepos } from "../store/slices/reposSlice";
 
 function Home() {
   const [value, setValue] = useState<string | null>(
-    localStorage.getItem("username")
+    localStorage.getItem("username") || ""
   );
   const [noValue, setNovalue] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
@@ -53,7 +53,7 @@ function Home() {
                 value={value as string}
                 onChange={handleInputChange}
               />
-              <button className="bg-indigo-600 text-white px-6 text-lg font-semibold py-4 rounded-r-md">
+              <button className="bg-indigo-600 text-white px-6 text-lg font-semibold py-4 rounded-r-md" data-testid="btn-submit">
                 <SearchIcon className="h-7 w-7 text-white" />
               </button>
             </div>

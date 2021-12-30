@@ -7,7 +7,7 @@ import {
   resetData,
   selectRepos,
   getRepoReadme,
-  resetError
+  resetError,
 } from "../store/slices/reposSlice";
 import Card from "../componenets/Card";
 import Header from "../componenets/Header";
@@ -31,11 +31,11 @@ function Projects() {
   }, [data]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, [error]);
 
   useEffect(() => {
-    if ((Object.keys(current_repo as object).length > 0)) {
+    if (Object.keys(current_repo as object).length > 0) {
       navigate("/projects-detail");
     }
   }, [current_repo]);
@@ -57,9 +57,18 @@ function Projects() {
           onClick={handleDataReset}
         />
         {" " + username}
-        {error ? <span className="text-red-700 ml-2">That Repo has no README.md file</span>: ""}
+        {error ? (
+          <span className="text-red-700 ml-2">
+            That Repo has no README.md file
+          </span>
+        ) : (
+          ""
+        )}
       </Header>
-      <div className="container mx-auto p-4 bg-gray-100">
+      <div
+        className="container mx-auto p-4 bg-gray-100"
+        data-testid="projects-container"
+      >
         <div className="lg:grid lg:grid-cols-4 lg:gap-4">
           {(data as object[]).map((item: any) => (
             <Card
