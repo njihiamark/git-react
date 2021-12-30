@@ -22,7 +22,7 @@ function Projects() {
       dispatch(resetData());
       dispatch(resetError());
     };
-  }, [window.onpopstate, navigate]);
+  }, [dispatch]);
 
   useEffect(() => {
     if ((data as object[]).length === 0) {
@@ -38,7 +38,7 @@ function Projects() {
     if (Object.keys(current_repo as object).length > 0) {
       navigate("/projects-detail");
     }
-  }, [current_repo]);
+  }, [current_repo, navigate]);
 
   const handleDataReset = () => {
     dispatch(resetData());
