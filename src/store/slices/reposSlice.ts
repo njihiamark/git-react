@@ -18,7 +18,7 @@ const initialState: ReposState = {
     username: localStorage.getItem("username") ? localStorage.getItem("username") : "",
     pending: false,
     error: false,
-    current_repo: localStorage.getItem("current_repo") ? JSON.parse(localStorage.getItem('current_repo') as string) :null
+    current_repo: localStorage.getItem("current_repo") ? JSON.parse(localStorage.getItem('current_repo') as string) :{}
 }
 
 //function to get the repos from github API
