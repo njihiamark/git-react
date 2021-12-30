@@ -22,7 +22,7 @@ function ProjectDetail() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (Object.keys(current_repo as object).length === 0) {
+    if (current_repo == null || Object.keys(current_repo as object).length === 0) {
       navigate("/projects");
     }
   }, [current_repo, navigate]);
