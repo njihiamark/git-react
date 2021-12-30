@@ -19,7 +19,7 @@ function ProjectDetail() {
       dispatch(resetReadMeRepo());
       dispatch(resetError());
     };
-  }, [window.onpopstate, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (Object.keys(current_repo as object).length === 0) {
