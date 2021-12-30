@@ -25,7 +25,7 @@ function Projects() {
   }, [dispatch]);
 
   useEffect(() => {
-    if ((data as object[]).length === 0) {
+    if (data == null || (data as object[]).length === 0) {
       navigate("/");
     }
   }, [data, navigate]);
@@ -35,7 +35,7 @@ function Projects() {
   }, [error]);
 
   useEffect(() => {
-    if (Object.keys(current_repo as object).length > 0) {
+    if (current_repo != null && Object.keys(current_repo).length > 0) {
       navigate("/projects-detail");
     }
   }, [current_repo, navigate]);

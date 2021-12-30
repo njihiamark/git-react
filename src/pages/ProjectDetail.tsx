@@ -21,6 +21,7 @@ function ProjectDetail() {
     };
   }, [dispatch]);
 
+  
   useEffect(() => {
     if (current_repo == null || Object.keys(current_repo as object).length === 0) {
       navigate("/projects");
