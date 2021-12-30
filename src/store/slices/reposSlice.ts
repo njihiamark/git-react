@@ -9,16 +9,16 @@ export type ReposState = {
     username: (null | string),
     pending: boolean,
     error: boolean,
-    current_repo: (null | object)
+    current_repo: (object)
 }
 
 //initialize the initial state
 const initialState: ReposState = {
-    data: localStorage.getItem("data") ? JSON.parse(localStorage.getItem('data') as string):[],
+    data: localStorage.getItem("data") ? JSON.parse(localStorage.getItem('data') as string) : [],
     username: localStorage.getItem("username") ? localStorage.getItem("username") : "",
     pending: false,
     error: false,
-    current_repo: localStorage.getItem("current_repo") ? JSON.parse(localStorage.getItem('current_repo') as string) :{}
+    current_repo: localStorage.getItem("current_repo") ? JSON.parse(localStorage.getItem('current_repo') as string) : {}
 }
 
 //function to get the repos from github API
@@ -36,13 +36,13 @@ export const getRepos = createAsyncThunk(
 //function to get the repo readme from github API
 export const getRepoReadme = createAsyncThunk(
     "repos/getRepoReadme",
-    async (nameObject:{username: string, reponame: string}) => {
-        const {username, reponame} = nameObject;
+    async (nameObject: { username: string, reponame: string }) => {
+        const { username, reponame } = nameObject;
         const response = await axios.get(
             `https://api.github.com/repos/${username}/${reponame}/contents/README.md`
         );
 
-        response.data.repo_name = reponame; 
+        response.data.repo_name = reponame;
         return response.data;
     }
 );
